@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Developer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <title>Prashant Tiwari | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -13,240 +13,315 @@
 
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #231e3b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg: #020617;
+            --card-glass: rgba(15, 23, 42, 0.6);
             --accent: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --error: #ef4444;
+            --text-p: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.2);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            background-color: var(--bg);
+            color: #f8fafc;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
         #hero-canvas {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             z-index: -1;
-            pointer-events: none;
         }
 
-        .contact-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        /* Elegant Navigation */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            padding: 12px 30px;
+            border-radius: 100px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        nav a { color: var(--text-p); text-decoration: none; transition: 0.3s; }
+        nav a:hover { color: var(--accent); }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 120px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .profile-container {
             position: relative;
-            z-index: 10;
+            display: inline-block;
+            margin-bottom: 2rem;
         }
 
-        h2 { font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--accent); text-align: center; }
-        p { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; text-align: center; }
-
-        .input-group { margin-bottom: 1.2rem; position: relative; }
-
-        label {
-            display: block;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
-            font-weight: 600;
+        .profile-pic {
+            width: 160px;
+            height: 160px;
+            border-radius: 40px; 
+            object-fit: cover;
+            border: 1px solid var(--border-glow);
+            padding: 8px;
+            background: linear-gradient(45deg, var(--bg), #1e293b);
+            transition: transform 0.5s ease;
         }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            background: #0f172a;
-            border: 1.5px solid #334155;
-            border-radius: 6px;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-            box-sizing: border-box;
+        .profile-pic:hover {
+            transform: rotate(5deg) scale(1.05);
         }
 
-        input:focus, textarea:focus {
-            outline: none;
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff, #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        /* Bento Grid Certificates */
+        .section-header { margin-bottom: 3rem; text-align: left; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 700; }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 100px;
+        }
+
+        .cert-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cert-card:hover {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+            transform: translateY(-8px);
+            background: rgba(15, 23, 42, 0.8);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        textarea { height: 120px; resize: none; }
+        .cert-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            filter: grayscale(40%);
+            transition: 0.3s;
+        }
+        .cert-card:hover img { filter: grayscale(0%); }
+
+        /* Elegant Form */
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            background: var(--card-glass);
+            padding: 60px;
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+        }
+
+        .input-group label {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-group input, .input-group textarea {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+            width: 100%;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus, .input-group textarea:focus { 
+            border-color: var(--accent);
+            background: rgba(0,0,0,0.5);
+        }
 
         button {
-            width: 100%;
-            padding: 12px;
             background: var(--accent);
-            color: #0f172a;
+            color: var(--bg);
+            padding: 18px 32px;
+            border-radius: 12px;
             border: none;
-            border-radius: 6px;
-            font-weight: 700;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 1rem;
+            width: 100%;
+            margin-top: 10px;
+            transition: 0.3s;
         }
 
-        button:hover { background: var(--accent-hover); }
-        
-        button:disabled {
-            background: #64748b;
-            cursor: not-allowed;
+        button:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 12px 24px rgba(56, 189, 248, 0.3);
+            background: #7dd3fc;
         }
 
-        .status {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-            min-height: 1.2rem;
+        @media (max-width: 850px) {
+            .cert-grid, .contact-wrap { grid-template-columns: 1fr; }
+            .contact-wrap { padding: 30px; }
+            nav { width: 90%; justify-content: center; gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
+<nav>
+    <a href="#home">Home</a>
+    <a href="#certs">Certificates</a>
+    <a href="#contact">Contact</a>
+</nav>
+
 <canvas id="hero-canvas"></canvas>
 
-<div class="contact-card reveal">
-    <h2>WELCOME TO RAJVARDHAN SINGH'S PORTFOLIO</h2>
-    <p>ALWAYS WITH YOU 🦅.</p>
-
-    <form id="portfolioForm">
-        <div class="input-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="RAJ" required>
+<div class="container">
+    <section id="home" class="hero reveal">
+        <div class="profile-container">
+            <img src="YOUR_PROFILE_PIC.jpg" alt="Prashant Tiwari" class="profile-pic">
         </div>
+        <h1>Prashant Tiwari</h1>
+        <p class="tagline">Crafting Digital Excellence 🦅</p>
+    </section>
 
-        <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="REENA@example.com" required>
+    <section id="certs">
+        <div class="section-header reveal">
+            <h2>Recognitions</h2>
+            <p style="color: var(--text-p)">Validating my expertise through global standards.</p>
         </div>
-
-        <div class="input-group">
-            <label for="message">Message</label>
-            <textarea id="message" placeholder="Tell me about your PARTY" required></textarea>
+        
+        <div class="cert-grid">
+            <div class="cert-card reveal">
+                <img src="cert1.jpg" alt="Certificate 1">
+                <h3>Specialist I</h3>
+                <p style="font-size: 0.8rem; color: var(--text-p)">Advanced Technical Mastery</p>
+            </div>
+            <div class="cert-card reveal" style="margin-top: 20px;">
+                <img src="cert2.jpg" alt="Certificate 2">
+                <h3>System Architect</h3>
+                <p style="font-size: 0.8rem; color: var(--text-p)">Enterprise Level Design</p>
+            </div>
+            <div class="cert-card reveal">
+                <img src="cert3.jpg" alt="Certificate 3">
+                <h3>Core Engineering</h3>
+                <p style="font-size: 0.8rem; color: var(--text-p)">Performance Optimization</p>
+            </div>
         </div>
+    </section>
 
-        <button type="submit" id="submitBtn">Send Message</button>
-        <div id="status" class="status"></div>
-    </form>
+    <section id="contact" class="contact-wrap reveal">
+        <div>
+            <h2 style="font-size: 2.8rem; margin-bottom: 1.5rem; line-height: 1.1;">Let's Initiate a Conversation</h2>
+            <p style="color: var(--text-p); font-size: 1.1rem;">Whether it is a project inquiry or a collaboration, I am always ready to connect.</p>
+        </div>
+        <form id="portfolioForm">
+            <div class="input-group">
+                <label>Your Name</label>
+                <input type="text" id="name" placeholder="e.g. John Doe" required>
+            </div>
+            <div class="input-group">
+                <label>Email Address</label>
+                <input type="email" id="email" placeholder="john@example.com" required>
+            </div>
+            <div class="input-group">
+                <label>Message</label>
+                <textarea id="message" rows="4" placeholder="How can I help you?" required></textarea>
+            </div>
+            <button type="submit" id="submitBtn">Send Direct Message</button>
+            <div id="status" style="margin-top: 15px; text-align: center; font-weight: 600;"></div>
+        </form>
+    </section>
 </div>
+<SCRIPT>
+// Ensure this is at the top of your script
+const { createClient } = supabase;
 
-<script>
-    // Supabase Initialization
-    const supabaseUrl = "https://rjxwgzbvxfqfcrggtgpz.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqeHdnemJ2eGZxZmNyZ2d0Z3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwODQ3MDAsImV4cCI6MjA4NzY2MDcwMH0.wOONGM22tabx1s-5U4xsnqIggZ6Sq-Os2ul1dmIMS8U";
-    const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseUrl = 'https://rjxwgzbvxfqfcrggtgpz.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqeHdnemJ2eGZxZmNyZ2d0Z3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwODQ3MDAsImV4cCI6MjA4NzY2MDcwMH0.wOONGM22tabx1s-5U4xsnqIggZ6Sq-Os2ul1dmIMS8UEY'; // Use your actual anon key here
+const _supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Feedback Form Handler
-    document.getElementById("portfolioForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const status = document.getElementById("status");
-        const submitButton = document.getElementById("submitBtn");
-        
-        status.innerText = "Submitting...";
-        status.style.color = "#fff";
-        submitButton.disabled = true;
+// Feedback Form Handler
+document.getElementById("portfolioForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const status = document.getElementById("status");
+    const btn = document.getElementById("submitBtn");
 
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const message = document.getElementById("message").value.trim();
+    // UI Feedback
+    btn.innerText = "Transmitting...";
+    btn.disabled = true;
 
-        try {
-            const { data, error } = await supabaseClient
-                .from("feedback")
-                .insert([{ name, email, message }]);
-
-            if (error) {
-                status.innerText = `❌ Error: ${error.message}`;
-                status.style.color = "#ff4444";
-            } else {
-                status.innerText = "✅ Feedback submitted successfully!";
-                status.style.color = "#00ffd5";
-                e.target.reset();
-                setTimeout(() => { status.innerText = ""; }, 5000);
-            }
-        } catch (err) {
-            status.innerText = "❌ Connection error. Please try again.";
-            status.style.color = "#ff4444";
-        } finally {
-            submitButton.disabled = false;
-        }
-    });
-
-    // 3D Background Logic
-    const init3D = () => {
-        const canvas = document.querySelector('#hero-canvas');
-        if (!canvas) return;
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        const particlesGeometry = new THREE.BufferGeometry();
-        const count = 3500;
-        const positions = new Float32Array(count * 3);
-        for(let i = 0; i < count * 3; i++) { positions[i] = (Math.random() - 0.5) * 12; }
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        
-        const particlesMaterial = new THREE.PointsMaterial({ size: 0.012, color: 0x38bdf8, transparent: true, opacity: 0.7 });
-        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particles);
-        camera.position.z = 4;
-
-        let mouseX = 0, mouseY = 0;
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
-        });
-
-        const animate = () => {
-            requestAnimationFrame(animate);
-            particles.rotation.y += 0.001;
-            particles.position.x += (mouseX * 0.4 - particles.position.x) * 0.05;
-            particles.position.y += (-mouseY * 0.4 - particles.position.y) * 0.05;
-            renderer.render(scene, camera);
-        };
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+    // Data collection
+    const contactData = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        message: document.getElementById("message").value.trim()
     };
 
-    // Scroll and UI Logic
-    const initLogic = () => {
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.utils.toArray('.reveal').forEach(elem => {
-            gsap.fromTo(elem, { opacity: 0, y: 30 }, { 
-                opacity: 1, y: 0, duration: 1, ease: "power2.out",
-                scrollTrigger: { trigger: elem, start: "top 85%" }
-            });
-        });
-    };
+    try {
+        const { error } = await _supabase
+            .from('feedback') // Make sure your table is named 'feedback'
+            .insert([contactData]);
 
-    window.onload = () => {
-        init3D();
-        initLogic();
-    };
-</script>
+        if (error) throw error;
+
+        status.innerText = "✅ Message received, Prashant!";
+        status.style.color = "#38bdf8";
+        e.target.reset();
+
+    } catch (err) {
+        console.error("Supabase Error:", err.message);
+        status.innerText = "❌ Error: " + err.message;
+        status.style.color = "#ef4444";
+    } finally {
+        btn.innerText = "Send Direct Message";
+        btn.disabled = false;
+    }
+});
+</SCRIPT>
 </body>
-
 </html>
-
