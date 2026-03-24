@@ -2,14 +2,17 @@ name: Deploy Portfolio to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Runs every time you push to the main branch
-  workflow_dispatch: # Allows you to run this manually from the Actions tab
+    branches: ["main"]
+  workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
+
+# Fixes the Node.js deprecation warning globally for this workflow
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   deploy:
@@ -22,12 +25,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5 # Updated version
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload the entire repository (since your index.html is in the root)
           path: '.'
 
       - name: Deploy to GitHub Pages
