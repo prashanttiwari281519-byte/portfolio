@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prashant  | Portfolio</title>
+    <title>Prashant Tiwari | Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         :root {
@@ -34,15 +33,16 @@
             position: fixed;
             top: 0; left: 0;
             z-index: -1;
+            pointer-events: none;
         }
 
-        /* Elegant Navigation */
+        /* Navigation */
         nav {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
             padding: 12px 30px;
             border-radius: 100px;
@@ -50,11 +50,9 @@
             z-index: 1000;
             display: flex;
             gap: 2rem;
-            font-size: 0.9rem;
-            font-weight: 500;
         }
 
-        nav a { color: var(--text-p); text-decoration: none; transition: 0.3s; }
+        nav a { color: var(--text-p); text-decoration: none; font-size: 0.9rem; transition: 0.3s; font-weight: 500;}
         nav a:hover { color: var(--accent); }
 
         .container {
@@ -63,37 +61,22 @@
             padding: 120px 20px;
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            margin-bottom: 100px;
-        }
-
-        .profile-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 2rem;
-        }
-
+        /* Hero */
+        .hero { text-align: center; margin-bottom: 100px; }
+        
         .profile-pic {
-            width: 160px;
-            height: 160px;
-            border-radius: 40px; 
+            width: 160px; height: 160px;
+            border-radius: 40px;
             object-fit: cover;
-            border: 1px solid var(--border-glow);
-            padding: 8px;
-            background: linear-gradient(45deg, var(--bg), #1e293b);
-            transition: transform 0.5s ease;
-        }
-
-        .profile-pic:hover {
-            transform: rotate(5deg) scale(1.05);
+            border: 2px solid var(--accent);
+            padding: 5px;
+            margin-bottom: 1.5rem;
+            transition: 0.5s;
         }
 
         h1 {
             font-size: clamp(2.5rem, 8vw, 4rem);
             font-weight: 800;
-            letter-spacing: -2px;
             background: linear-gradient(to bottom, #fff, #64748b);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -104,224 +87,217 @@
             text-transform: uppercase;
             letter-spacing: 4px;
             font-size: 0.8rem;
-            margin-top: 10px;
         }
 
-        /* Bento Grid Certificates */
-        .section-header { margin-bottom: 3rem; text-align: left; }
-        .section-header h2 { font-size: 2.2rem; font-weight: 700; }
-
+        /* Certificates */
         .cert-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
-            margin-bottom: 100px;
+            margin: 50px 0 100px;
         }
 
         .cert-card {
             background: var(--card-glass);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.05);
             border-radius: 24px;
-            padding: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 20px;
+            transition: 0.4s;
         }
 
         .cert-card:hover {
+            transform: translateY(-10px);
             border-color: var(--accent);
-            transform: translateY(-8px);
-            background: rgba(15, 23, 42, 0.8);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
         }
 
         .cert-card img {
             width: 100%;
-            height: 180px;
+            height: 200px;
             object-fit: cover;
-            border-radius: 16px;
+            border-radius: 15px;
             margin-bottom: 15px;
-            filter: grayscale(40%);
-            transition: 0.3s;
         }
-        .cert-card:hover img { filter: grayscale(0%); }
 
-        /* Elegant Form */
+        /* Contact Form */
         .contact-wrap {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 50px;
             background: var(--card-glass);
-            padding: 60px;
+            padding: 50px;
             border-radius: 32px;
             border: 1px solid rgba(255,255,255,0.05);
-            backdrop-filter: blur(12px);
         }
 
-        .input-group label {
-            font-size: 0.8rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        .input-group label { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; }
+        
         .input-group input, .input-group textarea {
+            width: 100%;
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.1);
-            padding: 16px;
+            padding: 15px;
             border-radius: 12px;
             color: white;
-            width: 100%;
-            margin-top: 8px;
-            margin-bottom: 15px;
+            margin: 8px 0 20px;
             outline: none;
-            transition: 0.3s;
-        }
-
-        .input-group input:focus, .input-group textarea:focus { 
-            border-color: var(--accent);
-            background: rgba(0,0,0,0.5);
         }
 
         button {
             background: var(--accent);
             color: var(--bg);
-            padding: 18px 32px;
+            padding: 15px;
             border-radius: 12px;
             border: none;
             font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
             width: 100%;
-            margin-top: 10px;
             transition: 0.3s;
         }
 
-        button:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 12px 24px rgba(56, 189, 248, 0.3);
-            background: #7dd3fc;
-        }
+        button:hover:not(:disabled) { transform: scale(1.02); opacity: 0.9; }
+        button:disabled { background: #475569; cursor: not-allowed; }
 
-        @media (max-width: 850px) {
-            .cert-grid, .contact-wrap { grid-template-columns: 1fr; }
+        @media (max-width: 768px) {
             .contact-wrap { padding: 30px; }
-            nav { width: 90%; justify-content: center; gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
+<canvas id="hero-canvas"></canvas>
+
 <nav>
     <a href="#home">Home</a>
-    <a href="#certs">Certificates</a>
+    <a href="#certs">Certs</a>
     <a href="#contact">Contact</a>
 </nav>
 
-<canvas id="hero-canvas"></canvas>
-
 <div class="container">
-    <section id="home" class="hero reveal">
-        <div class="profile-container">
-            <img src="YOUR_PROFILE_PIC.jpg" alt="Prashant Tiwari" class="profile-pic">
-        </div>
+    <section id="home" class="hero">
+        <img src="YOUR_PROFILE_PIC.jpg" alt="Prashant Tiwari" class="profile-pic">
         <h1>Prashant Tiwari</h1>
         <p class="tagline">Crafting Digital Excellence 🦅</p>
     </section>
 
     <section id="certs">
-        <div class="section-header reveal">
+        <div style="margin-bottom: 40px;">
             <h2>Recognitions</h2>
-            <p style="color: var(--text-p)">Validating my expertise through global standards.</p>
+            <p style="color: var(--text-p)">Industry validated expertise.</p>
         </div>
         
         <div class="cert-grid">
-            <div class="cert-card reveal">
-                <img src="aws.jpeg" alt="Certificate 1">
-                <h3>Specialist I</h3>
-                <p style="font-size: 0.8rem; color: var(--text-p)">AWS CLOUD FOUNDATION</p>
+            <div class="cert-card">
+                <img src="aws.jpeg" alt="AWS">
+                <h3>AWS Cloud</h3>
+                <p style="color: var(--text-p); font-size: 0.85rem;">Cloud Foundation Specialist</p>
             </div>
-            <div class="cert-card reveal" style="margin-top: 20px;">
-                <img src="front end.jpeg" alt="Certificate 2">
-                <h3>System Architect</h3>
-                <p style="font-size: 0.8rem; color: var(--text-p)">FRONTEND DEVELOPMENT</p>
+            <div class="cert-card">
+                <img src="front end.jpeg" alt="Frontend">
+                <h3>Frontend Dev</h3>
+                <p style="color: var(--text-p); font-size: 0.85rem;">Modern UI/UX Engineering</p>
             </div>
-            <div class="cert-card reveal">
-                <img src="git hub.jpeg" alt="Certificate 3">
-                <h3>Core Engineering</h3>
-                <p style="font-size: 0.8rem; color: var(--text-p)">GIT GITHUB</p>
+            <div class="cert-card">
+                <img src="git hub.jpeg" alt="GitHub">
+                <h3>Git & Versioning</h3>
+                <p style="color: var(--text-p); font-size: 0.85rem;">Collaborative Engineering</p>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="contact-wrap reveal">
+    <section id="contact" class="contact-wrap">
         <div>
-            <h2 style="font-size: 2.8rem; margin-bottom: 1.5rem; line-height: 1.1;">Let's Initiate a Conversation</h2>
-            <p style="color: var(--text-p); font-size: 1.1rem;">Whether it is a project inquiry or a collaboration, I am always ready to connect.</p>
+            <h2 style="font-size: 2.5rem; line-height: 1.1;">Let's Talk</h2>
+            <p style="color: var(--text-p); margin-top: 15px;">Send a message and I'll get back to you shortly.</p>
         </div>
         <form id="portfolioForm">
             <div class="input-group">
-                <label>Your Name</label>
-                <input type="text" id="name" placeholder="e.g. John Doe" required>
+                <label>Name</label>
+                <input type="text" id="name" placeholder="Prashant" required>
             </div>
             <div class="input-group">
-                <label>Email Address</label>
-                <input type="email" id="email" placeholder="john@example.com" required>
+                <label>Email</label>
+                <input type="email" id="email" placeholder="example@gmail.com" required>
             </div>
             <div class="input-group">
                 <label>Message</label>
-                <textarea id="message" rows="4" placeholder="How can I help you?" required></textarea>
+                <textarea id="message" rows="4" placeholder="Hi Prashant, let's work together!" required></textarea>
             </div>
-            <button type="submit" id="submitBtn">Send Direct Message</button>
-            <div id="status" style="margin-top: 15px; text-align: center; font-weight: 600;"></div>
+            <button type="submit" id="submitBtn">Send Message</button>
+            <p id="status" style="margin-top: 15px; text-align: center; font-size: 0.9rem;"></p>
         </form>
     </section>
 </div>
-<SCRIPT>
-// Ensure this is at the top of your script
-const { createClient } = supabase;
 
+<script>
+/** 1. SUPABASE INITIALIZATION **/
 const supabaseUrl = 'https://rjxwgzbvxfqfcrggtgpz.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqeHdnemJ2eGZxZmNyZ2d0Z3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwODQ3MDAsImV4cCI6MjA4NzY2MDcwMH0.wOONGM22tabx1s-5U4xsnqIggZ6Sq-Os2ul1dmIMS8U'; // Use your actual anon key here
-const _supabase = createClient(supabaseUrl, supabaseKey);
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJqeHdnemJ2eGZxZmNyZ2d0Z3B6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwODQ3MDAsImV4cCI6MjA4NzY2MDcwMH0.wOONGM22tabx1s-5U4xsnqIggZ6Sq-Os2ul1dmIMS8U';
+const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-// Feedback Form Handler
+/** 2. THREE.JS BACKGROUND ANIMATION **/
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('hero-canvas'), alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+const starsGeometry = new THREE.BufferGeometry();
+const starsCount = 1500;
+const posArray = new Float32Array(starsCount * 3);
+
+for(let i = 0; i < starsCount * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 10;
+}
+starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+const starsMaterial = new THREE.PointsMaterial({ size: 0.005, color: '#38bdf8' });
+const starsMesh = new THREE.Points(starsGeometry, starsMaterial);
+scene.add(starsMesh);
+
+camera.position.z = 2;
+
+function animate() {
+    requestAnimationFrame(animate);
+    starsMesh.rotation.y += 0.001;
+    renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/** 3. FORM HANDLER **/
 document.getElementById("portfolioForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const status = document.getElementById("status");
     const btn = document.getElementById("submitBtn");
+    const status = document.getElementById("status");
 
-    // UI Feedback
-    btn.innerText = "Transmitting...";
+    btn.innerText = "Sending...";
     btn.disabled = true;
 
-    // Data collection
-    const contactData = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        message: document.getElementById("message").value.trim()
+    const formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value
     };
 
-    try {
-        const { error } = await _supabase
-            .from('feedback') // Make sure your table is named 'feedback'
-            .insert([contactData]);
+    const { error } = await _supabase.from('feedback').insert([formData]);
 
-        if (error) throw error;
-
-        status.innerText = "✅ Message received, Prashant!";
+    if (error) {
+        status.innerText = "Error: " + error.message;
+        status.style.color = "#ef4444";
+    } else {
+        status.innerText = "Success! Message sent.";
         status.style.color = "#38bdf8";
         e.target.reset();
-
-    } catch (err) {
-        console.error("Supabase Error:", err.message);
-        status.innerText = "❌ Error: " + err.message;
-        status.style.color = "#ef4444";
-    } finally {
-        btn.innerText = "Send Direct Message";
-        btn.disabled = false;
     }
+    
+    btn.innerText = "Send Message";
+    btn.disabled = false;
 });
-</SCRIPT>
+</script>
 </body>
 </html>
